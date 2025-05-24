@@ -10,6 +10,28 @@ export default function App() {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new URLSearchParams();
+  //   formData.append("name", form.name);
+  //   formData.append("email", form.email);
+  //   formData.append("phone", form.phone);
+
+  //   try {
+  //     const response = await fetch(GOOGLE_SCRIPT_URL, {
+  //       method: "POST",
+  //       body: formData, // NO headers needed
+  //     });
+
+  //     const text = await response.text();
+  //     console.log(text);
+  //     setStatus("Registered successfully!");
+  //   } catch (err) {
+  //     console.error(err);
+  //     setStatus("Submission failed. Try again.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new URLSearchParams();
@@ -20,44 +42,24 @@ export default function App() {
     try {
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        body: formData, // NO headers needed
+        body: formData
       });
 
       const text = await response.text();
-      console.log(text);
-      setStatus("Registered successfully!");
+      if (text === "success") {
+        setStatus("✅ Registered successfully!");
+        setForm({ name: '', email: '', phone: '' });
+      } else if (text === "duplicate") {
+        setStatus("⚠️ This email is already registered.");
+      } else {
+        setStatus("❌ Unknown error. Try again.");
+      }
     } catch (err) {
       console.error(err);
-      setStatus("Submission failed. Try again.");
+      setStatus("❌ Submission failed. Try again.");
     }
   };
 
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   setStatus("Submitting...");
-
-  //   try {
-  //     const response = await fetch(GOOGLE_SCRIPT_URL, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify(form)
-  //     });
-
-  //     const result = await response.json();
-  //     if (result.result === "success") {
-  //       setStatus("Registered successfully!");
-  //       setForm({ name: '', email: '', phone: '' });
-  //     } else {
-  //       setStatus("Error: " + result.message);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setStatus("Submission failed. Try again.");
-  //   }
-  // };
 
   return (
     <div style={{ maxWidth: 400, margin: '2rem auto', fontFamily: 'Arial' }}>
