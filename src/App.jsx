@@ -1,0 +1,95 @@
+import React, { useState } from 'react';
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwJ6xtAieR2gSj5qMhFe-jhTro64m74x07l93RR2flyqGpgp2Q98g_1bf_DYDnBaM/exec"; // <-- Replace this
+
+export default function App() {
+  const [form, setForm] = useState({ name: '', email: '', phone: '' });
+  const [status, setStatus] = useState('');
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new URLSearchParams();
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("phone", form.phone);
+
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData, // NO headers needed
+      });
+
+      const text = await response.text();
+      console.log(text);
+      setStatus("Registered successfully!");
+    } catch (err) {
+      console.error(err);
+      setStatus("Submission failed. Try again.");
+    }
+  };
+
+
+  // const handleSubmit = async e => {
+  //   e.preventDefault();
+  //   setStatus("Submitting...");
+
+  //   try {
+  //     const response = await fetch(GOOGLE_SCRIPT_URL, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify(form)
+  //     });
+
+  //     const result = await response.json();
+  //     if (result.result === "success") {
+  //       setStatus("Registered successfully!");
+  //       setForm({ name: '', email: '', phone: '' });
+  //     } else {
+  //       setStatus("Error: " + result.message);
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     setStatus("Submission failed. Try again.");
+  //   }
+  // };
+
+  return (
+    <div style={{ maxWidth: 400, margin: '2rem auto', fontFamily: 'Arial' }}>
+      <h2>Event Registration</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        /><br /><br />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          required
+        /><br /><br />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          value={form.phone}
+          onChange={handleChange}
+          required
+        /><br /><br />
+        <button type="submit">Register</button>
+      </form>
+      <p>{status}</p>
+    </div>
+  );
+}
