@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwJ6xtAieR2gSj5qMhFe-jhTro64m74x07l93RR2flyqGpgp2Q98g_1bf_DYDnBaM/exec"; // <-- Replace this
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKvwnUIeQ5OOFUdFY6CNsVDbIDhk03P6fvRGpdMoqgMpVf56fqnDIYfGP8rGgFpUQt/exec"; // <-- Replace this
 
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', phone: '' });
