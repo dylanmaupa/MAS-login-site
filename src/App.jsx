@@ -78,6 +78,7 @@
 
 
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import './App.scss';
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKvwnUIeQ5OOFUdFY6CNsVDbIDhk03P6fvRGpdMoqgMpVf56fqnDIYfGP8rGgFpUQt/exec"; // <-- Replace this
@@ -110,17 +111,20 @@ export default function App() {
       if (text === "success") {
         setStatus("✅ Registered successfully!");
         setForm({ name: '', email: '', phone: '' });
+        Swal.fire('Success', '✅ Registered successfully!', 'success');
       } else if (text === "duplicate") {
         setStatus("⚠️ This user is already registered.");
+        Swal.fire('Warning', '⚠️ This user is already registered.', 'warning');
       } else {
         setStatus("❌ Unknown error. Try again.");
+        Swal.fire('Error', '❌ Unknown error. Try again.', 'error');
       }
     } catch (err) {
       console.error(err);
       setStatus("❌ Submission failed. Try again.");
+      Swal.fire('Error', '❌ Submission failed. Try again.', 'error');
     } finally {
       setLoading(false); // Stop loading
-      alert(status); // Display status as a pop-up
     }
   };
 
