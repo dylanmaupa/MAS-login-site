@@ -1,3 +1,82 @@
+// import React, { useState } from 'react';
+// import './App.scss';
+
+// const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKvwnUIeQ5OOFUdFY6CNsVDbIDhk03P6fvRGpdMoqgMpVf56fqnDIYfGP8rGgFpUQt/exec"; // <-- Replace this
+
+// export default function App() {
+//   const [form, setForm] = useState({ name: '', email: '', phone: '' });
+//   const [status, setStatus] = useState('');
+
+//   const handleChange = e => {
+//     const { name, value } = e.target;
+//     setForm(prev => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     const formData = new URLSearchParams();
+//     formData.append("name", form.name);
+//     formData.append("email", form.email);
+//     formData.append("phone", form.phone);
+
+//     try {
+//       const response = await fetch(GOOGLE_SCRIPT_URL, {
+//         method: "POST",
+//         body: formData
+//       });
+
+//       const text = await response.text();
+//       if (text === "success") {
+//         setStatus("✅ Registered successfully!");
+//         setForm({ name: '', email: '', phone: '' });
+//       } else if (text === "duplicate") {
+//         setStatus("⚠️ This user is already registered.");
+//       } else {
+//         setStatus("❌ Unknown error. Try again.");
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       setStatus("❌ Submission failed. Try again.");
+//     }
+//   };
+
+
+//   return (
+//     <div className='wrapper' style={{  }}>
+//       <h2>Event Registration</h2>
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           name="name"
+//           placeholder="Full Name"
+//           value={form.name}
+//           onChange={handleChange}
+//           required
+//         /><br /><br />
+//         <input
+//           type="email"
+//           name="email"
+//           placeholder="Email"
+//           value={form.email}
+//           onChange={handleChange}
+//           required
+//         /><br /><br />
+//         <input
+//           type="tel"
+//           name="phone"
+//           placeholder="Phone Number"
+//           value={form.phone}
+//           onChange={handleChange}
+//           required
+//         /><br /><br />
+//         <button type="submit">Register</button>
+//       </form>
+//       <p>{status}</p>
+//     </div>
+//   );
+// }
+
+
 import React, { useState } from 'react';
 import './App.scss';
 
@@ -6,6 +85,7 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKvwnUIeQ5OO
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -14,6 +94,7 @@ export default function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
     const formData = new URLSearchParams();
     formData.append("name", form.name);
     formData.append("email", form.email);
@@ -37,12 +118,14 @@ export default function App() {
     } catch (err) {
       console.error(err);
       setStatus("❌ Submission failed. Try again.");
+    } finally {
+      setLoading(false); // Stop loading
+      alert(status); // Display status as a pop-up
     }
   };
 
-
   return (
-    <div className='wrapper' style={{  }}>
+    <div className='wrapper'>
       <h2>Event Registration</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -69,9 +152,10 @@ export default function App() {
           onChange={handleChange}
           required
         /><br /><br />
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Submitting..." : "Register"}
+        </button>
       </form>
-      <p>{status}</p>
     </div>
   );
 }
