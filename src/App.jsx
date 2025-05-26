@@ -30,7 +30,7 @@ export default function App() {
         setStatus("✅ Registered successfully!");
         setForm({ name: '', email: '', phone: '' });
       } else if (text === "duplicate") {
-        setStatus("⚠️ This email is already registered.");
+        setStatus("⚠️ This user is already registered.");
       } else {
         setStatus("❌ Unknown error. Try again.");
       }
