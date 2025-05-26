@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.scss';
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKvwnUIeQ5OOFUdFY6CNsVDbIDhk03P6fvRGpdMoqgMpVf56fqnDIYfGP8rGgFpUQt/exec"; // <-- Replace this
 
@@ -10,27 +11,6 @@ export default function App() {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new URLSearchParams();
-  //   formData.append("name", form.name);
-  //   formData.append("email", form.email);
-  //   formData.append("phone", form.phone);
-
-  //   try {
-  //     const response = await fetch(GOOGLE_SCRIPT_URL, {
-  //       method: "POST",
-  //       body: formData, // NO headers needed
-  //     });
-
-  //     const text = await response.text();
-  //     console.log(text);
-  //     setStatus("Registered successfully!");
-  //   } catch (err) {
-  //     console.error(err);
-  //     setStatus("Submission failed. Try again.");
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +42,7 @@ export default function App() {
 
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto', fontFamily: 'Arial' }}>
+    <div className='wrapper' style={{  }}>
       <h2>Event Registration</h2>
       <form onSubmit={handleSubmit}>
         <input
