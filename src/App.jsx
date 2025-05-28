@@ -129,37 +129,42 @@ export default function App() {
   };
 
   return (
-    <div className='wrapper'>
-      <h2>Event Registration</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        /><br /><br />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        /><br /><br />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number"
-          value={form.phone}
-          onChange={handleChange}
-          required
-        /><br /><br />
-        <button type="submit" disabled={loading}>
-          {loading ? "Submitting..." : "Register"}
-        </button>
-      </form>
+    <div className="banner">
+      <div className="imgBox">
+        <img src="/Green Illustration Log In Page Desktop Prototype (2).png" alt="" />
+      </div>
+      <div className='wrapper'>
+        <form onSubmit={handleSubmit}>
+          <h2>Welcome To The 10th European Film Festival!</h2>
+          <input
+            type="text"
+            name="name"
+            placeholder="John Doe"
+            value={form.name}
+            onChange={handleChange}
+            required
+          /><br /><br />
+          <input
+            type="email"
+            name="email"
+            placeholder="jondoe@example.com"
+            value={form.email}
+            onChange={handleChange}
+            required
+          /><br /><br />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="0712345678"
+            value={form.phone}
+            onChange={handleChange}
+            required
+          /><br /><br />
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Register"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
